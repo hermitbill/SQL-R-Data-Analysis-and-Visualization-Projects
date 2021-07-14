@@ -26,7 +26,7 @@ Water quality metrics
 
 ## EDA (Exploratory data analysis) 
 I looked at the distributions and spread of the continuous variables (independent) in relation to the drinkability of water (dependent). Below are a few highlights.\
-![correlation](cor_water.png)
+<img src="cor_water.png" width="600">
 
 
 ## Conclusion 
