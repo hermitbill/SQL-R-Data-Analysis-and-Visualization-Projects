@@ -40,6 +40,7 @@ legendary pokemon - a group of incredibly rare and often very powerful Pokémon,
 ## Insights
 * Very few Pokemon have Hp bars over 150 points 
 * All Pokemon metrics are statically significant to the Total 
-* Top 10 Pokemon in each metric 
-!(boxplots.png)
-!(multiple_linear_regression.png)
+* Top 10 Pokemon in each metric\
+ 
+1[](boxplots.png)
+![](multiple_linear_regression.png)
