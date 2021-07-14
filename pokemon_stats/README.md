@@ -2,7 +2,7 @@
 
 Had lots of fun with this dataset. I grew up playing, trading and collecting Pokemon. In the past few years I haven't had the time to really get back in to it. This dataset was fun to play around with. It help me see how much Pokemon had grown. 
 
-##Table of contents 
+## Table of contents 
 * Importing dataset
 * Cleaning and processing the dataset
 * Building new subsets (legendary Pokemon, mystical Pokemon, Ultra beast)
@@ -41,5 +41,5 @@ legendary pokemon - a group of incredibly rare and often very powerful Pokémon,
 * Very few Pokemon have Hp bars over 150 points 
 * All Pokemon metrics are statically significant to the Total 
 * Top 10 Pokemon in each metric 
-()[boxplots.png]
-()[multiple_linear_regression.png]
+!(boxplots.png)
+!(multiple_linear_regression.png)
