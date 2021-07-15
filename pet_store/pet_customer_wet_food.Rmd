@@ -1,0 +1,227 @@
+---
+title: "How a pet-store can increase the sales of wet pet food"
+author: "William Chime"
+date: "6/29/2021"
+output: html_document
+---
+
+![Giphy](https://media.giphy.com/media/RnzrErVKt7xRe/giphy.gif)
+
+## Objective 
+
+Main task is to generate actionable insights from this pet food customer orders data set.
+As a focus area, I to address the following questions:
+
+* Which customers order and reorder the wet food, and when are they likely to try it?
+* Are there certain characteristics of the pets, customers or their orders that impact how likely they are to purchase the wet food, and keep ordering it?
+* Based on this data, what do you suggest we focus on to get more customers taking and continuing to enjoy our wet food?
+
+
+## Data Source 
+This data set is a selection of customers and their orders. This task was provided by Jahangir Raina on [Kaggle](https://www.kaggle.com/jahangirraina/pet-food-customer-orders-online/tasks?taskId=2615).
+
+
+The data is in wide format. There's no information on where the data came from or how it was collected.The data set has several missing entries. 
+
+
+
+## Preparing and cleaning the data set
+Load libraries
+```{r}
+#load libraries
+library(tidyverse)
+library(lubridate)
+```
+
+
+
+**Load data set**
+```{r}
+#load csv 
+pet_food_customer <- read.csv("~/Downloads/pet_food_customer_orders.csv")
+```
+
+
+
+**Taking a look small into the data set**
+```{r}
+head(pet_food_customer)
+```
+
+
+**Format 'order_payment_date' dates and creating dates,weekdays and month/year columns**
+```{r}
+#format date and create weekday,month and year col
+pet_food_customer$date <- as.Date(pet_food_customer$order_payment_date)
+pet_food_customer$weekday <- wday(pet_food_customer$date,label = TRUE, abbr = TRUE)
+pet_food_customer$month <- format(as.Date(pet_food_customer$date), "%y %m")
+```
+
+
+
+**Filtering wet pet food orders**
+```{r}
+#filter out 
+customer_wet_food <- filter(pet_food_customer,pet_food_customer$wet_food_order_number > 1 )
+#omit NA rows
+customer_wet_food <- drop_na(customer_wet_food)
+```
+
+### Analysis 
+
+**A quick analytic review of the data set**
+```{r}
+summary(customer_wet_food)
+```
+
+
+
+**The highest month of wet pet food orders**
+```{r}
+customer_wet_food %>%
+  group_by(month) %>% 
+  summarise(num_of_order = n()) %>% 
+  arrange(desc(num_of_order))
+
+```
+
+
+
+**The most popular food type tier **
+```{r}
+#food type
+customer_wet_food %>% 
+  group_by(pet_food_tier) %>% 
+  summarise(num_of_order = n()) %>% 
+  arrange(desc(num_of_order))
+```
+
+
+
+**How customers heard of the store and purchased wet pet food**
+```{r}
+customer_wet_food %>% 
+  group_by(signup_promo) %>% 
+  summarise(num = n()) %>% 
+  arrange(desc(num))
+  
+```
+
+
+
+**List of popular food flavors** 
+```{r}
+#pet food flavor
+customer_wet_food %>% 
+  group_by(pet_fav_flavour_list) %>% 
+  summarise(num = n(),) %>% 
+  filter(pet_fav_flavour_list != "") %>% 
+  arrange(desc(num))
+```
+
+
+
+
+**The common health issue in pets that bought wet pet food**
+```{r}
+#health issues
+customer_wet_food %>% 
+  group_by(pet_health_issue_list) %>% 
+  filter(pet_health_issue_list != "") %>% 
+  summarise(num = n()) %>% 
+  arrange(desc(num))
+```
+
+
+
+**The common allergies among pets that bought wet pet food**
+```{r}
+#pet allergies
+customer_wet_food %>% 
+  group_by(pet_allergen_list) %>% 
+  filter(pet_allergen_list != "") %>% 
+  summarise(num=n()) %>% 
+  arrange(desc(num))
+```
+
+
+## Visual 
+
+**Gender of pets**
+```{r}
+customer_wet_food %>% 
+  group_by(gender) %>% 
+  summarise(num_of_order = n()) %>% 
+  ggplot(aes(x=1,y=num_of_order,fill=gender))+geom_bar(color="Black",stat = "identity",width = 1) + 
+  coord_polar(theta = "y")+
+  theme_void()+
+  scale_fill_brewer(palette = "Set1")
+```
+
+
+
+```{r}
+#weekday
+customer_wet_food %>%
+  group_by(weekday, customer_id) %>% 
+  ggplot(aes(x=weekday)) + geom_bar(color="Black",fill="#4B9CD3")+
+  labs(title = "Number of wet pet food orders per weekday in a year",x="Weekdays",y="Wet pet food orders")
+
+#month/year
+customer_wet_food %>%
+  group_by(month, customer_id) %>% 
+  ggplot(aes(x=month,)) + geom_bar(color="Black",fill="#4B9CD3")+
+  theme(axis.text.x = element_text(angle = 45))+
+  scale_x_discrete(labels = c("Jan '19","Feb '20","Mar '19","Apr '19","May '19","Jun '19","Jul '19","Aug '19","Sep '19","Oct '19","Nov '19","Dec '19","Jan '20","Feb '20","Mar '20"))+
+  labs(title = "Number of wet pet food orders per month",x="Month-Year",y="Wet pet food orders")
+
+
+```
+
+
+The percentage of pet in genders 
+```{r}
+#how many reoccurring orders
+# orders were mostly for small dogs
+customer_wet_food %>% 
+  group_by(pet_breed_size) %>% 
+  summarise(num_of_order = n()) %>% 
+  ggplot(aes(x=pet_breed_size,y=num_of_order)) + geom_bar(color="Black",stat="identity",fill="#4B9CD3")+
+  labs(title = "Pet breed size vs wet pet food orders", x="Pet breed size", y="Number of wet pet food orders")
+```
+
+
+
+The ages of pets 
+```{r}
+customer_wet_food %>% 
+  group_by(pet_life_stage_at_order) %>% 
+  summarise(num_of_order = n()) %>% 
+  ggplot(aes(x=pet_life_stage_at_order,y=num_of_order)) + geom_bar(color="Black",stat="identity",fill="#4B9CD3")+
+  labs(title = "Pet life stage vs Wet pet food orders", x="Pet life stage", y="Number of wet pet food orders")
+```
+
+
+## Conclusion
+* There no huge difference in genders
+* Must pet food is bought during the holiday seasons 
+* Sunday, Tuesday and Thursdays are popular days that wet pet food is purchase 
+* wet pet food are common with small pet owners 
+* mature pets
+* super premium is the must popular pet food tier
+* favorite flavors include Chicken and Beef Chicken Lamb
+* digestion and skin & coat are common issue among pets 
+* Null & Default (walk-ins) and Search Generic are the
+
+
+## Suggestions
+
+* stocking products that is good for digestion, skin and coat
+* Making it clear on the website the different variety of wet food  products 
+* Stock more Chicken and Beef Chicken Lamb flavor foods
+
+
+```{r}
+
+```
+
