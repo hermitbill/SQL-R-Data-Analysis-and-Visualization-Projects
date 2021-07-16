@@ -124,7 +124,6 @@ data_sample %>%
   scale_fill_manual(values = c("#552583","#FDB927"))+
   labs(title = "Number of rides per month", y = "Number of Rides" )
   
-#fix length
 
 
 
