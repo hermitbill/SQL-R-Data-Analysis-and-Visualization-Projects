@@ -1,6 +1,6 @@
 # pokemon game stats
 
-Had lots of fun with this dataset. I grew up playing, trading and collecting Pokemon. In the past few years I haven't had the time to really get back in to it. This dataset was fun to play around with. It help me see how much Pokemon had grown. 
+Had lots of fun with this dataset. I grew up playing, trading and collecting Pokemon. In the past few years I haven't had the time to really get back in to it but this dataset brought back so many memories. I had alot of fun working with this dataset and I hope you enjoy my findings. 
 
 ## Table of contents 
 * Importing dataset
@@ -39,7 +39,7 @@ legendary pokemon - a group of incredibly rare and often very powerful Pokémon,
 
 ## Insights
 * Very few Pokemon have Hp bars over 150 points 
-* All Pokemon metrics are statically significant to the Total 
+* All Pokemon metrics are statically significant to the Total because the total is the sum of all metrics( attack, hp, etc.) 
 * Top 10 Pokemon in each metric
  
 <img src="boxplots.png" width="600"> 
