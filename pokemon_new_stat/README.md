@@ -1,5 +1,5 @@
 # pokemon game stats
-()[pokemon_logo.png]
+![](pokemon_logo.png)
 Had lots of fun with this dataset. I grew up playing, trading and collecting Pokemon. In the past few years I haven't had the time to really get back in to it. This dataset was fun to play around with. It help me see how much Pokemon had grown. 
 
 ## Table of contents 
@@ -42,13 +42,13 @@ legendary pokemon - a group of incredibly rare and often very powerful Pokémon,
 * All Pokemon metrics are statically significant to the Total 
 
 ### Top 10 Attackers
-()[top_attack.png]
+![](top_attack.png)
 
 ### Top 10 Defenders
 ![](top_def.png)
 
 ### Metric distrubtion 
-()[boxplots.png]
+![](boxplots.png)
 
 ### Linear regression model 
-()[multiple_linear_regression.png]
+![](multiple_linear_regression.png)
