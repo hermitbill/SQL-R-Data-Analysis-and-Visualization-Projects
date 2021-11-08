@@ -2,7 +2,7 @@
 ()[pokemon_logo.png]
 Had lots of fun with this dataset. I grew up playing, trading and collecting Pokemon. In the past few years I haven't had the time to really get back in to it. This dataset was fun to play around with. It help me see how much Pokemon had grown. 
 
-##Table of contents 
+## Table of contents 
 * Importing dataset
 * Cleaning and processing the dataset
 * Building new subsets (legendary Pokemon, mystical Pokemon, Ultra beast)
@@ -45,7 +45,7 @@ legendary pokemon - a group of incredibly rare and often very powerful Pokémon,
 ()[top_attack.png]
 
 ### Top 10 Defenders
-()[top_def.png]
+![](top_def.png)
 
 ### Metric distrubtion 
 ()[boxplots.png]
