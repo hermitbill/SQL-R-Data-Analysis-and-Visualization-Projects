@@ -303,23 +303,14 @@ final_data %>%
 
 
 
-
 ## Conclusions
-  
   
   * Casual members spend more time riding on the weekends compare to Annual members.
   * Both Casual and Annual members have a preference for docked bikes. 
   * The number of bike rides increase during warmer months.
   * On average, Casual members take longer rides compared to Annual member. 
 
-  
-  
-  
-  
-
 ## Suggestions
-  
-  
   * Advertise membership promotions to Casual members that spend a lot of time riding our bikes.
   * Promote the annual membership on the weekends. 
   * Entice Causal members with promotions and deals as the months gets warmer.
