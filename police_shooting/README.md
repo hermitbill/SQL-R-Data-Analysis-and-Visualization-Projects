@@ -30,6 +30,7 @@ This dataset comes from https://data.world/awram/us-police-involved-fatalities.
 
 ### Weekdays 
 **Weekdays show no relationship to death count.**
+
 ![](img/weekday.png)
 
 ### Year
