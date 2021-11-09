@@ -1,13 +1,13 @@
 # pokemon game stats
-![](pokemon_logo.png)
+![](img/pokemon_logo.png)
 Had lots of fun with this dataset. I grew up playing, trading and collecting Pokemon. In the past few years I haven't had the time to really get back in to it. This dataset was fun to play around with. It help me see how much Pokemon had grown. 
 
 ## Table of contents 
-* Importing dataset
-* Cleaning and processing the dataset
-* Building new subsets (legendary Pokemon, mystical Pokemon, Ultra beast)
-* Ranking Pokemon on different metrics 
-* Data visualizations
+* Importing dataset.
+* Cleaning and processing the dataset.
+* Building new subsets (legendary Pokemon, mystical Pokemon, Ultra beast).
+* Ranking Pokemon on different metrics. 
+* Data visualizations.
 
 ## Code and Resourse Used 
 **Languages**: Rstudio and SQL\
@@ -38,19 +38,18 @@ legendary pokemon - a group of incredibly rare and often very powerful Pokémon,
 **Gigantamax** - is a temporary transformation that increases the size of the Pokemon as well as Hp points.
 
 ## Insights
-* Very few Pokemon have Hp bars over 150 points 
-* All Pokemon metrics are statically significant to the Total 
+* Very few Pokemon have Hp bars over 150 points. 
+* All Pokemon metrics are statically significant to the Total. 
 
 ### Top 10 Attackers
-![](top_attack.png)
+![](img/top_attack.png)
 
 ### Top 10 Defenders
-![](top_def.png)
+![](img/top_def.png)
 
 ### Metric distrubtion 
-![](boxplots.png)
+![](img/boxplots.png)
 
 ### Linear regression model 
-![](multiple_linear_regression.png)
+![](img/multiple_linear_regression.png)
 
-hihiihihihi
