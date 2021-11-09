@@ -18,17 +18,6 @@ The data is in wide format. There's no information on where the data came from o
 * tidyverse
 * lubridate
 
-## Conclusion
-* There no huge difference in genders
-* Must pet food is bought during the holiday seasons 
-* Sunday, Tuesday and Thursdays are popular days that wet pet food is purchase 
-* wet pet food are common with small pet owners 
-* mature pets
-* super premium is the must popular pet food tier
-* favorite flavors include Chicken and Beef Chicken Lamb
-* digestion and skin & coat are common issue among pets 
-* Null & Default (walk-ins) and Search Generic are the
-
 ## Insights 
 ![](img/gender.png)
 
@@ -40,9 +29,19 @@ The data is in wide format. There's no information on where the data came from o
 ![](img/pet_life_v_wet_pet_food.png)
 
 
+## Conclusion
+* There are no major differences in genders.
+* Must pet food is bought during the holiday seasons. 
+* Sunday, Tuesday and Thursdays are popular days that wet pet food are purchased.
+* Wet pet food are common with small pet owners and mature pets.
+* Super premium food is the must popular pet food tier.
+* The favorite flavors include Chicken and Beef Chicken Lamb.
+* Digestion and skin & coat are common issue among pets. 
+* Null & Default (walk-ins) and Search Generic are how must pet owners and people find the store.
+
 ## Suggestions
 
-* Stocking products that is good for digestion, skin and coat.
-* Making it clear on the website the different variety of wet food  products 
+* Stocking products that are good for digestion, skin and coat.
+* Making it clear on the website the different variety of wet food  products (better UX/UI). 
 * Stock more Chicken and Beef Chicken Lamb flavor foods.
 
