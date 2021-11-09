@@ -25,11 +25,12 @@ This dataset comes from https://data.world/awram/us-police-involved-fatalities.
 
 ### States
 **California has the highest death count.**
+
 ![](img/state_v_death.png)
 
 ### Weekdays 
 **Weekdays show no relationship to death count.**
-![](weeday.png)
+![](img/weeday.png)
 
 ### Year
 ![](img/year_v_death.png)
