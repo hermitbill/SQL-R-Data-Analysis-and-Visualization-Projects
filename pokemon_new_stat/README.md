@@ -52,3 +52,5 @@ legendary pokemon - a group of incredibly rare and often very powerful Pokémon,
 
 ### Linear regression model 
 ![](multiple_linear_regression.png)
+
+hihiihihihi
