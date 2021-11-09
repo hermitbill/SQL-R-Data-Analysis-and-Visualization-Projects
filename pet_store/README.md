@@ -13,3 +13,36 @@ This data set is a selection of customers and their orders. This task was provid
 
 
 The data is in wide format. There's no information on where the data came from or how it was collected.The data set has several missing entries. 
+
+## Libraries
+* tidyverse
+* lubridate
+
+## Conclusion
+* There no huge difference in genders
+* Must pet food is bought during the holiday seasons 
+* Sunday, Tuesday and Thursdays are popular days that wet pet food is purchase 
+* wet pet food are common with small pet owners 
+* mature pets
+* super premium is the must popular pet food tier
+* favorite flavors include Chicken and Beef Chicken Lamb
+* digestion and skin & coat are common issue among pets 
+* Null & Default (walk-ins) and Search Generic are the
+
+## Insights 
+![](img/gender.png)
+
+*Gender of pets.
+
+![](img/num_wet_food_order.png)
+![](img/num_of_wet_food_month.png)
+![](img/pet_breed_v_wet_pet.png)
+![](img/pet_life_v_wet_pet_food.png)
+
+
+## Suggestions
+
+* Stocking products that is good for digestion, skin and coat.
+* Making it clear on the website the different variety of wet food  products 
+* Stock more Chicken and Beef Chicken Lamb flavor foods.
+

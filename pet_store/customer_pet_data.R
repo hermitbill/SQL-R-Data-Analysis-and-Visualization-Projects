@@ -42,7 +42,7 @@ customer_wet_food %>%
 customer_wet_food %>% 
   group_by(pet_breed_size) %>% 
   summarise(num_of_order = n()) %>% 
-  ggplot(aes(x=pet_breed_size,y=num_of_order),fill=num_of_order) + geom_bar(stat="identity")
+  ggplot(aes(x=pet_breed_size,y=num_of_order)) + geom_bar(stat="identity")
 
 
 customer_wet_food %>% 
@@ -99,3 +99,43 @@ customer_wet_food %>%
   summarise(num=n()) %>% 
   arrange(desc(num))
   
+#month/year
+customer_wet_food %>%
+  group_by(month, customer_id) %>% 
+  ggplot(aes(x=month,)) + geom_bar(color="Black",fill="#4B9CD3")+
+  theme(axis.text.x = element_text(angle = 45))+
+  scale_x_discrete(labels = c("Jan '19","Feb '20","Mar '19","Apr '19","May '19","Jun '19","Jul '19","Aug '19","Sep '19","Oct '19","Nov '19","Dec '19","Jan '20","Feb '20","Mar '20"))+
+  labs(title = "Number of wet pet food orders per month",x="Month-Year",y="Wet pet food orders")
+
+#weekday
+customer_wet_food %>%
+  group_by(weekday, customer_id) %>% 
+  ggplot(aes(x=weekday)) + geom_bar(color="Black",fill="#4B9CD3")+
+  labs(title = "Number of wet pet food orders per weekday in a year",x="Weekdays",y="Wet pet food orders")
+
+
+#how many reoccurring orders
+# orders were mostly for small dogs
+customer_wet_food %>% 
+  group_by(pet_breed_size) %>% 
+  summarise(num_of_order = n()) %>% 
+  ggplot(aes(x=pet_breed_size,y=num_of_order)) + geom_bar(color="Black",stat="identity",fill="#4B9CD3")+
+  labs(title = "Pet breed size vs wet pet food orders", x="Pet breed size", y="Number of wet pet food orders")
+
+
+customer_wet_food %>% 
+  group_by(pet_life_stage_at_order) %>% 
+  summarise(num_of_order = n()) %>% 
+  ggplot(aes(x=pet_life_stage_at_order,y=num_of_order)) + geom_bar(color="Black",stat="identity",fill="#4B9CD3")+
+  labs(title = "Pet life stage vs Wet pet food orders", x="Pet life stage", y="Number of wet pet food orders")
+
+
+
+
+
+
+
+
+
+
+
