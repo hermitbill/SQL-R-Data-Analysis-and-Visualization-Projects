@@ -2,219 +2,237 @@
 library(tidyverse)
 library(lubridate)
 library(ggthemes)
+library(tidyverse) # metapackage of all tidyverse packages
 
-#upload dataset
+# ### Load the dataset.
 shooting_dataset <- read_csv("Police Fatalities.csv")
-
-#a small view of the dataset
 head(shooting_dataset)
 
-#check for missing values 
+# ### A quick look at the first 6 values.
+
+str(shooting_dataset)
+
+# ### Checking columns format.
+
 colSums(is.na(shooting_dataset))
 
-#replace NA value with unharmed in the armed col
-shooting_dataset$Armed <- ifelse(is.na(shooting_dataset$Armed),"Unarmed", shooting_dataset$Armed)
+# ### There are several missing entries in a couple columns.
 
-#average age in col
-shooting_dataset$Age <- ifelse(is.na(shooting_dataset$Age),
-                               ave(shooting_dataset$Age, FUN = function(x) mean(x, na.rm = TRUE)),
-                               shooting_dataset$Age)
-#convert to integer
+shooting_dataset$Armed <- ifelse(is.na(shooting_dataset$Armed),"Unharmed",shooting_dataset$Armed )
+
+# ### Replacing 'NA' values with 'Unaramerd' in the Armed column.
+
+shooting_dataset$Age <- ifelse(is.na(shooting_dataset$Age), ave(shooting_dataset$Age, FUN = function(x) mean(x, na.rm = TRUE)),shooting_dataset$Age)
+
+# ### Fill missing ages values with the average.
+
 shooting_dataset$Age <- as.integer(shooting_dataset$Age)
-colSums(is.na(shooting_dataset))
 
-#removing gender and race missing values
-shooting_dataset <- na.omit(shooting_dataset)
+#change date format
+shooting_dataset$Date <- format(mdy(shooting_dataset$Date), "%Y/%m/%d")
 
-#-----------
-rate <- state_by_race$n / sum(state_by_race$n) * 100
-state_by_race$rate <- rate
-boxplot(rate~Race, data=state_by_race)
+# ### Format Age column to integer.
 
-state_by_race$State[which.max(state_by_race$rate)]
-state_by_race$State[which.min(state_by_race$rate)]
-
-ca <- state_by_race %>% 
-  filter(State == "CA")
-
-ak <- state_by_race %>% 
-  filter(State == "AK")
-
-barplot(rate~Race, data = ca)
-hist(state_by_race$rate)
-#----------
-
-#quick analytically 
-summary(shooting_dataset)
-
-#format date col
-shooting_dataset$Date <-format(mdy(shooting_dataset$Date), "%Y/%m/%d")
 shooting_dataset$Date <- as.Date(shooting_dataset$Date)
+
+# ### Format Date column.
+
+#creating Year column 
 shooting_dataset$Year <- format(shooting_dataset$Date, "%Y")
-shooting_dataset$Weekday <- wday(shooting_dataset$Date, label = TRUE, abbr = TRUE )
 
-#quick visuals 
-shooting_dataset %>% 
-  ggplot(mapping = aes(Gender)) + geom_bar()
-#we don't have an equal balance of genders, it might be that males get shoot more.
+# ### Create Year column from Date column.
 
-#race
-shooting_dataset %>% 
-  ggplot(mapping = aes(Race)) + geom_bar()
+shooting_dataset$Weekday <-wday(shooting_dataset$Date, label = TRUE, abbr = TRUE)
 
-# states with highest crime 
-shooting_dataset %>% 
-  ggplot(mapping = aes(State)) + geom_bar() + 
-  theme(axis.text.x = element_text(angle=45) )
-  
-#the matter of death 
-shooting_dataset %>% 
-  ggplot(mapping = aes(Manner_of_death)) + geom_bar()
+# ### Create a Weekday column.
 
-#weekday 
-shooting_dataset %>% 
-  ggplot(mapping = aes(Weekday)) + geom_bar()
-#no relationship
+head(shooting_dataset)
 
-#2015 had the most deaths Time series 
+summary(shooting_dataset)
+#top 10 city 
+# ### The top 10 cities with the highest deaths.
+
+#gender
 shooting_dataset %>%
-  group_by(Year) %>% 
-  summarise(Death.count = n()) %>% 
-  ggplot(aes(Year, Death.count)) + geom_point()+
-  theme(axis.text.x = element_text(angle = 45))
+  filter(!is.na(Gender))%>%
+  ggplot(aes(Gender, fill=Gender))+
+  geom_bar()+
+  theme_clean()+
+  theme(legend.position ="none")+ 
+  labs(title="Gender vs Death Count", y = "Death Count ")
 
-shooting_dataset %>% 
-  group_by(City) %>% 
-  summarise(City.count = n()) %>% 
-  arrange(desc(City.count)) %>% top_n(10)
-  
+# ### We have more men than female deaths: 
+# * **it can be that more men get killed than women.** 
+# * **its possible that women weren't fully represented in the dataset.**
+# * **I also ommited several missing values.**
 
-#encoding & distribution 
-hist(shooting_dataset$Age)
+#Race
+shooting_dataset %>%
+  filter(!is.na(Race))%>%
+  ggplot(aes(Race, fill=Race))+
+  geom_bar()+
+  theme_clean()+
+  theme(legend.position="none")+
+  labs(title="Race vs Death Count", y = "Death Count")
 
-#Over all age distribution ( not a good representation)
-shooting_dataset %>% 
-  ggplot(mapping = aes(Age)) + geom_histogram()
-#multiple shoulders 
+# ### Whites have the highest death. 
+# ### Remember I did omit over a thousand missing race values.
 
-#rate 
-#male
-x <- filter(shooting_dataset, Gender == "Male")
-x %>% ggplot(data = x,mapping = aes(Age)) + geom_histogram(binwidth = 1, fill="lightblue",col="black")+
-  theme_clean() + labs(y="Number of Men")
+#state
+shooting_dataset %>%
+  ggplot(aes(State))+
+  geom_bar(fill="blue")+
+  theme_clean()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(title="State vs Death Count", y = "Death Count")
 
+# ### California has the highest death count.
 
-#female
-x <- filter(shooting_dataset, Gender == "Female")
-x %>% ggplot(data = x,mapping = aes(Age)) + geom_histogram()
-#-----
-params <- shooting_dataset %>% 
+#matter of death
+shooting_dataset%>%
+  ggplot(aes(Manner_of_death)) +
+  theme_clean()+
+  geom_bar(fill="blue")+
+  labs(title="Manner of Death vs Death Count", y = "Death Count", x = "Manner of Death" )
+
+#Weekday vs death count
+shooting_dataset%>%
+  ggplot(aes(Weekday))+
+  theme_clean()+
+  geom_bar(fill = 'blue')+
+  labs(title="Weekday vs Death Count", y = "Death Count")
+
+# ### Weekdays show no relationship to death count.
+
+#the percentage of those who have a mental illness
+x <- shooting_dataset%>%
+  filter(Gender == "Male")%>%
+  pull(Mental_illness)
+
+prop.table(table(x))
+
+# ### Majority of the people in the dataset have no mental illness.
+
+#Death count vs Years 
+shooting_dataset%>%
+  group_by(Year)%>%
+  summarise(Death.count=n())%>%
+  ggplot(aes(Year,Death.count,group=1,col="red"))+
+  geom_line()+
+  theme_clean()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1 ), legend.position = "none")+
+  labs(title="Year vs Death Count", y = "Death Count")
+
+# * **2015 has the highest death count**
+# * **2013 and 2014 have the same death count**
+# * **a plunge in death from 2015 to 2016**
+
+#taking a closer look at the death count vs Races during highlighted years
+years = c(2013,2014,2015,2016)
+shooting_dataset %>%
+  filter(Year %in% years & !is.na(Race))%>%
+  group_by(Race, Year)%>%
+  ggplot(aes(Race, fill=Race))+
+  geom_bar()+
+  #theme_clean()+
+  facet_wrap(.~Year)+ 
+  theme(axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank())+
+  labs(title="Race per Year vs Death Count", y = "Death Count", x="")
+
+#distribution in age
+shooting_dataset %>%
+  ggplot(aes(Age))+ 
+  theme_clean()+
+  geom_histogram(binwidth = 1, fill="blue", color="black")+
+  labs(title="Age Distribution", y = "Number of people")
+
+# There are 2 local modes
+
+#age stats
+shooting_dataset %>%
+  group_by(Gender)%>%
+  summarise(mean=mean(Age),sd= sd(Age))
+
+#Male age distribution
+params <- shooting_dataset %>%
   filter(Gender == "Male") %>%
-  summarize(mean=mean(Age), sd = sd(Age)) 
+  summarize(mean = mean(Age), sd = sd(Age))
 
-table(params)
-
-shooting_dataset %>%
-  ggplot(aes(sample = Age)) + 
+shooting_dataset%>%
+  ggplot(aes(sample = Age))+
   geom_qq(dparams = params)+
-  geom_abline()
-#-----
+  geom_abline()+
+  theme_clean()+
+  labs(title='Male Age distribution')
 
-#scale function
-#if it follows a normal distribution 
-shooting_dataset %>% 
-  filter(Gender == 'Female') %>% 
-  ggplot(aes(sample = scale(Age)))+
-  geom_qq()+
-  geom_abline()
-#-----
+params <- shooting_dataset %>%
+  filter(Gender == "Female") %>%
+  summarize(mean = mean(Age), sd = sd(Age))
 
-shooting_dataset %>% 
-  group_by(Gender) %>% 
-  summarise(mean = mean(Age), sd = sd(Age))
+#women
+shooting_dataset%>%
+  ggplot(aes(sample = Age))+
+  geom_qq(dparams = params)+
+  geom_abline()+
+  theme_clean()+
+  labs(title='Female Age distribution')
 
-shooting_dataset %>% 
-  filter(Gender == "Male") %>% 
-  group_by(Race) %>% 
-  summarise(mean = mean(Age), min = min(Age), max = max(Age), median = median(Age))
 
-library(ggrepel)
-  
-#distribution of age within genders
-index <- shooting_dataset$Gender == "Male"
-x <- shooting_dataset$Age[index]
-hist(x)
-x
+# Men and Women follow a some-what normal distribution
 
-#distribution of age within genders
-index <- shooting_dataset$Gender == "Female"
-x <- shooting_dataset$Age[index]
-hist(x)
+# age distribution between Genders
+shooting_dataset %>%
+  filter(!is.na(Gender))%>%
+  ggplot(aes(Age))+ 
+  geom_histogram(binwidth = 1, fill="blue")+
+  facet_grid(.~Gender)+
+  labs(title="Age Distribution between Genders", y = "Number of people")
 
-# the different race in deaths btw genders 
-ggplot(data=shooting_dataset, mapping = aes(Race))+
-  geom_bar(aes(fill=Gender), position = "dodge")
-
-#comparing the age that died to years 
-diff <- filter(shooting_dataset,Year%in%c(2000,2016)) %>%
-  group_by(Race,Age,Year) %>% 
-  summarise(Race.count = n())
-
-diff %>% 
-  ggplot(aes(Race,Race.count, fill = Race))+
-  geom_boxplot()+
-  theme(legend.position = 'none')
-
-shooting_dataset %>% 
-  group_by(Race, Year) %>% 
-  summarise(Race.count = n()) %>% 
-  ggplot(aes(Race, Race.count, fill= Race))+
+# the distribution of Age btw Race 
+shooting_dataset %>%
+  filter(!is.na(Race))%>%
+  group_by(Race, Age)%>%
+  summarise(Age.count = n())%>%
+  ggplot(aes(Race, Age, fill=Race))+
   geom_boxplot()+
   theme_clean()+
   theme(legend.position = "none")+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-#-------
-#returns max vaule
-diff$Age[which.max(diff$Race.count)]
-diff$Race[which.max(diff$Race.count)]
-diff$Year[which.max(diff$Race.count)]
-max(diff$Race.count)
-
-diff %>% 
-  select(Race,Age,Year,Race.count) %>% 
-  filter(Race.count == max(diff$Race.count))
-#-------
-diff %>% ggplot(aes(Age,Race.count, col = Race))+
-  geom_point()+
-  facet_grid(.~Year)
-
-years <- c(2000,2005,2010,2011,2012,2013,2014,2015,2016)
-race <- c("Black","White")
-
-shooting_dataset %>% 
-  filter(Year %in% years & Race %in% race) %>% 
-  group_by(Race,Age,Year) %>% 
-  summarise(Race.count = n()) %>% 
-  ggplot(aes(Age,Race.count, col = Race))+
-  geom_point()+
-  facet_wrap(~Year)
-
-#white v black 
-shooting_dataset %>% 
-  filter(Race %in% race) %>% 
-  group_by(Year,Race) %>%   
-  summarise(Year.count = n()) %>% 
-  ggplot(aes(Year,Year.count, group=Race, col=Race)) + 
-  geom_line()
+  labs(title="Age vs Race")
 
 
-#box plot 
-shooting_dataset %>% 
-  group_by(Race) %>% 
-  
-  
-  
+# Native and Other have the youngest death age.
 
+# the distribution of Age btw Race & Gender
+shooting_dataset %>%
+  filter(!is.na(Race) & !is.na(Gender))%>%
+  group_by(Race,Age,Gender)%>%
+  summarise(Age.count = n())%>%
+  ggplot(aes(Race,Age, fill=Race))+ 
+  geom_boxplot()+
+  facet_grid(.~Gender)+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
+  labs(title="Age vs Race between Genders")
 
+# Women have a lower age average between races
 
+#mental health 
+shooting_dataset%>%
+  filter(!is.na(Gender))%>%
+  ggplot(aes(Mental_illness, fill= Mental_illness))+
+  geom_bar()+
+  facet_wrap(Year~Gender)+
+  theme(axis.text.x = element_blank(), axis.ticks.x= element_blank()) +
+  labs(title="Mental illness per Year vs Genders", y = "Death count", x="")
+
+#Mental illness vs Race
+shooting_dataset%>%
+  #boxplot vs age vs mental_illness
+  filter(!is.na(Race))%>%
+  group_by(Age,Mental_illness,Race)%>%
+  summarise(Mental.count = n())%>%
+  ggplot(aes(Race,Age, fill=Race))+
+  geom_boxplot()+
+  facet_wrap(.~Mental_illness)+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())+
+  labs(title="Age vs Race vs Mental illness")
