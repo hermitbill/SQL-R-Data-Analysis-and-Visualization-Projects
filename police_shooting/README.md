@@ -2,9 +2,9 @@
 This dataset aims to provide insight into individuals who were killed during alteractions with police. It includes information on their age, race, mental health status, weapons they were armed with, and if they were fleeing.
 
 ## Libraries 
-*tidyverse
-*lubridate
-*ggthemes
+* tidyverse
+* lubridate
+* ggthemes
 
 ## Data source 
 This dataset comes from https://data.world/awram/us-police-involved-fatalities.
@@ -18,14 +18,14 @@ This dataset comes from https://data.world/awram/us-police-involved-fatalities.
 ![](img/gender_v_death.png)
 
 ### Race 
-**Whites have the highest death. 
+**Whites have the highest death.** 
 **Remember I did omit over a thousand missing race values.**
 
 ![](img/race_v_death.png)
 
 ### States
-![](img/state_v_death.png)
 **California has the highest death count.**
+![](img/state_v_death.png)
 
 ### Weekdays 
 **Weekdays show no relationship to death count.**
@@ -50,8 +50,8 @@ This dataset comes from https://data.world/awram/us-police-involved-fatalities.
 ![](img/avg_v_gender_race.png)
 ![](img/race_per_year.png)
 
-*Native and Other have the youngest death age.
-*Women have a lower age average between races.
+* Native and Other have the youngest death age.
+* Women have a lower age average between races.
 
 ## Suggestions 
 * **There are several missing values for a couple columns, I can't say for sure my conclusion are valid especially during this period of BLM movement. But I do believe my analysis with the present data holds water.**
