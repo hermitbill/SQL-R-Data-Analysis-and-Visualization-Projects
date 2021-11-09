@@ -18,8 +18,8 @@ This dataset comes from https://data.world/awram/us-police-involved-fatalities.
 ![](img/gender_v_death.png)
 
 ### Race 
-**Whites have the highest death.** 
-**Remember I did omit over a thousand missing race values.**
+* **Whites have the highest death.** 
+* **Remember I did omit over a thousand missing race values.**
 
 ![](img/race_v_death.png)
 
@@ -30,7 +30,7 @@ This dataset comes from https://data.world/awram/us-police-involved-fatalities.
 
 ### Weekdays 
 **Weekdays show no relationship to death count.**
-![](img/weeday.png)
+![](img/weekday.png)
 
 ### Year
 ![](img/year_v_death.png)
